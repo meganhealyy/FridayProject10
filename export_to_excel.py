@@ -1,7 +1,9 @@
 import sqlite3
+import pandas as pd
 
 # Path to your database file
 db_path = 'feedback.db'
+output_excel_file = 'customer_feedback.xlsx'  # Name of the Excel file to save
 
 # Function to fetch data from the database and relabel columns
 def fetch_feedback_data(db_path):
@@ -31,6 +33,13 @@ def fetch_feedback_data(db_path):
         print(f"Database error: {e}")
         return []
 
-# Call the function and display the feedback
+# Fetch feedback data
 feedback_data = fetch_feedback_data(db_path)
-print(feedback_data)
+
+# Convert the list of dictionaries to a pandas DataFrame
+feedback_df = pd.DataFrame(feedback_data)
+
+# Save the DataFrame to an Excel file
+feedback_df.to_excel(output_excel_file, index=False)
+
+print(f"Data saved to {output_excel_file}")
